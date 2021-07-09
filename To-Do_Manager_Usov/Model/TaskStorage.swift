@@ -27,6 +27,6 @@ class TasksStorage: TasksStorageProtocol {
     }
     
     func saveTasks(_ tasks: [TaskProtocol]) {
-        <#code#>
+        // code will be added later
     }
 }
