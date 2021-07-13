@@ -10,7 +10,17 @@ import UIKit
 class TaskListController: UITableViewController {
 
     var tasksStorage: TasksStorageProtocol = TasksStorage()
-    var tasks: [TaskPriority : [TaskProtocol]] = [:]
+    var tasks: [TaskPriority : [TaskProtocol]] = [:] {
+        didSet {
+            for (taskGroupPriority, taskGroup) in tasks {
+                tasks[taskGroupPriority] = taskGroup.sorted { task1, task2 in
+                    let task1position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
+                    let task2position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
+                    return task1position < task2position
+                }
+            }
+        }
+    }
     
     // order of section presentation by type
     // array index corresponds to table section index
@@ -23,6 +33,7 @@ class TaskListController: UITableViewController {
         super.viewDidLoad()
         loadTasks()
 
+        navigationItem.leftBarButtonItem = editButtonItem
     }
 
     private func loadTasks() {
@@ -44,13 +55,7 @@ class TaskListController: UITableViewController {
 //            }
 //        }
         
-        for (taskGroupPriority, taskGroup) in tasks {
-            tasks[taskGroupPriority] = taskGroup.sorted { task1, task2 in
-                let task1position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
-                let task2position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
-                return task1position < task2position
-            }
-        }
+        
     }
     
     //MARK: - Table view setup
@@ -87,6 +92,76 @@ class TaskListController: UITableViewController {
         return getConfiguredTaskCell_stack(for: indexPath)
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 1. check whether a task exists
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else {return}
+        
+        // 2. ensure that the task is not completed
+        guard tasks[taskType]![indexPath.row].status == .planned else {
+            // remove selection from row
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
+        // 3. mark selected task as completed
+        tasks[taskType]![indexPath.row].status = .completed
+        
+        // 4. reload specific section in the table
+        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // get info about the task needing to be planned
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else {return nil}
+        
+        // verify that the task has "completed" status
+        guard tasks[taskType]![indexPath.row].status == .completed else {return nil}
+        
+        // create an action to change status
+        let actionSwipeInstance = UIContextualAction(style: .normal, title: "Not completed") { _,_,_ in
+            self.tasks[taskType]![indexPath.row].status = .planned
+            self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        }
+        
+        // return configured object
+        return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        // delete the task
+        tasks[taskType]?.remove(at: indexPath.row)
+        
+        // delete the row corresponding to the task
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    // manual tasks sorting
+
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // section from which movement was initiated
+        let taskTypeFrom = sectionsTypesPosition[sourceIndexPath.section]
+        // section to which movement was initiated
+        let taskTypeTo = sectionsTypesPosition[destinationIndexPath.section]
+        
+        // safe unwrapping of the task
+        guard let movedTask = tasks[taskTypeFrom]?[sourceIndexPath.row] else {return}
+        
+        // delete task from original placement
+        tasks[taskTypeFrom]!.remove(at: sourceIndexPath.row)
+        // insert task to new destination
+        tasks[taskTypeTo]!.insert(movedTask, at: destinationIndexPath.row)
+
+        //if section has changed, change task type according to new placement
+        if taskTypeFrom != taskTypeTo {
+            tasks[taskTypeTo]![destinationIndexPath.row].type = taskTypeTo
+        }
+        
+        // reload data
+        tableView.reloadData()
+    }
     
     //MARK: - Cell types
     // cell based on constraints
