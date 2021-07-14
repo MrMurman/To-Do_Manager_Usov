@@ -19,6 +19,13 @@ class TaskListController: UITableViewController {
                     return task1position < task2position
                 }
             }
+            
+            // task saving
+            var savingArray: [TaskProtocol] = []
+            tasks.forEach {_, value in
+                savingArray += value
+            }
+            tasksStorage.saveTasks(savingArray)
         }
     }
     
@@ -31,7 +38,7 @@ class TaskListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTasks()
+       // loadTasks()
 
         navigationItem.leftBarButtonItem = editButtonItem
     }
@@ -56,6 +63,19 @@ class TaskListController: UITableViewController {
 //        }
         
         
+    }
+    
+    func setTasks(_ tasksCollection: [TaskProtocol]) {
+        // preparation of collection with tasks
+        // we will use only those tasks, which have defied section
+        sectionsTypesPosition.forEach {taskType in
+            tasks[taskType] = []
+        }
+        
+        // loading and segregation of tasks from storage
+        tasksCollection.forEach { task in
+            tasks[task.type]?.append(task)
+        }
     }
     
     //MARK: - Table view setup
