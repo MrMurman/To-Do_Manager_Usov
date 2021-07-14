@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		951E9E85269ECB3F00E21F72 /* TaskEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951E9E84269ECB3F00E21F72 /* TaskEditController.swift */; };
+		951E9E87269ED28E00E21F72 /* TaskTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951E9E86269ED28E00E21F72 /* TaskTypeController.swift */; };
+		951E9E8A269ED3CE00E21F72 /* TaskTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951E9E88269ED3CD00E21F72 /* TaskTypeCell.swift */; };
+		951E9E8B269ED3CE00E21F72 /* TaskTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 951E9E89269ED3CE00E21F72 /* TaskTypeCell.xib */; };
 		9557A8562698435F005E17BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9557A8552698435F005E17BA /* AppDelegate.swift */; };
 		9557A8582698435F005E17BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9557A8572698435F005E17BA /* SceneDelegate.swift */; };
 		9557A85D2698435F005E17BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9557A85B2698435F005E17BA /* Main.storyboard */; };
@@ -19,6 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		951E9E84269ECB3F00E21F72 /* TaskEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditController.swift; sourceTree = "<group>"; };
+		951E9E86269ED28E00E21F72 /* TaskTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTypeController.swift; sourceTree = "<group>"; };
+		951E9E88269ED3CD00E21F72 /* TaskTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTypeCell.swift; sourceTree = "<group>"; };
+		951E9E89269ED3CE00E21F72 /* TaskTypeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskTypeCell.xib; sourceTree = "<group>"; };
 		9557A8522698435F005E17BA /* To-Do_Manager_Usov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "To-Do_Manager_Usov.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9557A8552698435F005E17BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9557A8572698435F005E17BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +79,8 @@
 				9557A85E26984360005E17BA /* Assets.xcassets */,
 				9557A86026984360005E17BA /* LaunchScreen.storyboard */,
 				9557A86326984360005E17BA /* Info.plist */,
+				951E9E84269ECB3F00E21F72 /* TaskEditController.swift */,
+				951E9E86269ED28E00E21F72 /* TaskTypeController.swift */,
 			);
 			path = "To-Do_Manager_Usov";
 			sourceTree = "<group>";
@@ -88,6 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				9557A87326985EC6005E17BA /* TaskCell.swift */,
+				951E9E88269ED3CD00E21F72 /* TaskTypeCell.swift */,
+				951E9E89269ED3CE00E21F72 /* TaskTypeCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -152,6 +164,7 @@
 			files = (
 				9557A86226984360005E17BA /* LaunchScreen.storyboard in Resources */,
 				9557A85F26984360005E17BA /* Assets.xcassets in Resources */,
+				951E9E8B269ED3CE00E21F72 /* TaskTypeCell.xib in Resources */,
 				9557A85D2698435F005E17BA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,8 +180,11 @@
 				9557A8562698435F005E17BA /* AppDelegate.swift in Sources */,
 				9557A8582698435F005E17BA /* SceneDelegate.swift in Sources */,
 				9557A86F269854B7005E17BA /* TaskStorage.swift in Sources */,
+				951E9E87269ED28E00E21F72 /* TaskTypeController.swift in Sources */,
 				9557A87426985EC6005E17BA /* TaskCell.swift in Sources */,
 				9557A86A269847A4005E17BA /* TaskListController.swift in Sources */,
+				951E9E85269ECB3F00E21F72 /* TaskEditController.swift in Sources */,
+				951E9E8A269ED3CE00E21F72 /* TaskTypeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
